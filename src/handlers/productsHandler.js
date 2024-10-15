@@ -1,15 +1,44 @@
+const {
+  getProductsByNameController,
+  getAllProductsController,
+  createProductController,
+  getProductByIdController,
+  //getProductsByMarcaController,
+} = require("../controllers/productsController");
+
 const getAllProductsHandler = (req, res) => {
-  const { name } = req.query;
-  console.log(name);
-  res.send("Estos son los productos");
+  const { nombre } = req.query;
+  if (nombre) {
+    res.send(getProductsByNameController(nombre));
+  } else {
+    const response = getAllProductsController();
+    res.send(response);
+  }
 };
 
 const getOneProductHandler = (req, res) => {
-  res.send("Este es el detalle de un producto");
+  const { id } = req.params;
+  const response = getProductByIdController(id);
+  res.send(response);
 };
 
 const createProductHandler = (req, res) => {
-  res.send("Creando producto");
+  try {
+    const { nombre, marca, precio, color, stock } = req.body;
+    if (!nombre || !marca || !precio || !color || !stock) {
+      throw new Error("Faltan datos");
+    }
+    const response = createProductController(
+      nombre,
+      marca,
+      precio,
+      color,
+      stock
+    );
+    res.status(201).send(response);
+  } catch (error) {
+    res.status(418).send({ Error: error.message });
+  }
 };
 
 const updateProductHandler = (req, res) => {

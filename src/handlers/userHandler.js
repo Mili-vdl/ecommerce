@@ -1,29 +1,74 @@
+const { response } = require("express");
+const {
+  createUserController,
+  getAllUsersController,
+  getUserByNameController,
+  getUserByIdController,
+  updateUserController,
+  deleteUserController,
+} = require("../controllers/usersController");
+const Joi = require("joi");
+const userSchema = Joi.object({
+  name: Joi.string().min(3).required(),
+  username: Joi.string().min(3).required(),
+  email: Joi.string().email().required(),
+});
+
 const getAllUsersHandler = (req, res) => {
-  const { name } = req.query;
-  if (name) {
-    res.send(`Este es`);
-  } else {
-    res.send("Estos son los usuarios");
+  try {
+    const { name } = req.query;
+    if (name) {
+      res.send(getUserByNameController(name));
+    } else {
+      const response = getAllUsersController();
+      res.send(response);
+    }
+  } catch (error) {
+    res.status(418).send({ Error: error.message });
   }
 };
 
 const getOneUserHandler = (req, res) => {
-  const { id } = req.params;
-  console.log(id);
-  res.send("Este es el detalle de un usuario");
+  try {
+    const { id } = req.params;
+    const response = getUserByIdController(id);
+    res.send(response);
+  } catch (error) {
+    res.status(418).send({ Error: error.message });
+  }
 };
 
 const createUserHandler = (req, res) => {
-  const { id, name, username, email } = req.body;
-  res.send(`${id}, ${name}, username, email`);
+  try {
+    const { error } = userSchema.validate(req.body);
+    if (error) res.status(418).send(error.details[0].message);
+    const { name, username, email } = req.body;
+    const response = createUserController(name, username, email);
+    res.status(201).send(response);
+  } catch (error) {
+    res.status(418).send({ Error: error.message });
+  }
 };
 
 const updateUserHandler = (req, res) => {
-  res.send("Actualizo usuario");
+  try {
+    const { id } = req.params;
+    const { name, username, email } = req.body;
+    const response = updateUserController(id, name, username, email);
+    res.send(response);
+  } catch (error) {
+    res.status(418).send({ Error: error.message });
+  }
 };
 
 const deleteUserHandler = (req, res) => {
-  res.send("Eliminando usuario");
+  try {
+    const { id } = req.params;
+    const response = deleteUserController(id);
+    res.send(response);
+  } catch (error) {
+    res.status(418).send({ Error: error.message });
+  }
 };
 
 module.exports = {
