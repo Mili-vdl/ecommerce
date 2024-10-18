@@ -1,7 +1,7 @@
 const users = [
-  { id: 1, name: "carlos", username: "carlos", email: "carlos@mail.com" },
-  { id: 2, name: "juan", username: "juan", email: "juan@mail.com" },
-  { id: 3, name: "maria", username: "maria", email: "maria@mail.com" },
+  // { id: 1, name: "carlos", username: "carlos", email: "carlos@mail.com" },
+  // { id: 2, name: "juan", username: "juan", email: "juan@mail.com" },
+  // { id: 3, name: "maria", username: "maria", email: "maria@mail.com" },
 ];
 
 const products = [
