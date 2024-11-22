@@ -1,0 +1,29 @@
+[33mcommit 12a84265878ec4f44a8eacc3506fb6b9cf0cc572[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: mili vidal <milagrosvdal@gmail.com>
+Date:   Thu Nov 21 21:16:05 2024 -0300
+
+    corrección en db
+
+[33mcommit c4d355ca7859fe8ff5da520b5bbcbb587799b269[m
+Author: mili vidal <milagrosvdal@gmail.com>
+Date:   Thu Nov 21 21:01:43 2024 -0300
+
+    feat(auth): conecta a MongoDB y agrega funciones de registro y login
+
+[33mcommit b44f63b4288c4ea1c6b6cfc8b8342f4d03cb2149[m
+Author: mili vidal <milagrosvdal@gmail.com>
+Date:   Fri Oct 18 00:04:39 2024 -0300
+
+    Agrego hash de contraseña
+
+[33mcommit 3b214221017722efd65558acab12380c7f39834a[m
+Author: mili vidal <milagrosvdal@gmail.com>
+Date:   Tue Oct 15 19:00:16 2024 -0300
+
+    agrego controladores con sus funciones
+
+[33mcommit fc8517bff81932d510c1447b68b7b834b665c499[m
+Author: mili vidal <milagrosvdal@gmail.com>
+Date:   Wed Oct 9 16:00:47 2024 -0300
+
+    inicio server, rutas y handlers
