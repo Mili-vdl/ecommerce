@@ -16,7 +16,9 @@ const userSchema = Joi.object({
 const registerHandler = async (req, res) => {
   try {
     const { error } = userSchema.validate(req.body);
-    if (error) res.status(418).send(error.details[0].message);
+    if (error) {
+      return res.status(418).send(error.details[0].message);
+    }
     const { name, username, email, password, role } = req.body;
     const response = await registerController(
       name,

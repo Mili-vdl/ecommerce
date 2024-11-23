@@ -1,9 +1,26 @@
-const { products } = require("../db/dataBase");
+//const { products } = require("../db/dataBase");
+const Product = require("../models/Products");
 
-const createProductController = (nombre, marca, precio, color, stock) => {
-  const id = products.length + 1;
-  const newProduct = { id, nombre, marca, precio, color, stock };
-  products.push(newProduct);
+const createProductController = async (
+  nombre,
+  categoria,
+  marca,
+  inalambrico,
+  precio,
+  stock,
+  fechaIngreso
+) => {
+  const newProduct = new Product({
+    nombre,
+    categoria,
+    marca,
+    inalambrico,
+    precio,
+    stock,
+    fechaIngreso,
+  });
+  await newProduct.validate();
+  newProduct.save();
   return newProduct;
 };
 
