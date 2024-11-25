@@ -1,3 +1,4 @@
+const productSchema = require("../models/Products");
 const {
   getProductsByNameController,
   getAllProductsController,
@@ -22,17 +23,17 @@ const getOneProductHandler = (req, res) => {
   res.send(response);
 };
 
-const createProductHandler = (req, res) => {
+const createProductHandler = async (req, res) => {
   try {
-    const { nombre, marca, precio, color, stock } = req.body;
-    if (!nombre || !marca || !precio || !color || !stock) {
-      throw new Error("Faltan datos");
-    }
-    const response = createProductController(
+    //const { error } = productSchema.validate(req.body);
+    //if (error) res.status(418).send(error.details[0].message);
+    const { nombre, categoria, marca, inalambrico, precio, stock } = req.body;
+    const response = await createProductController(
       nombre,
+      categoria,
       marca,
+      inalambrico,
       precio,
-      color,
       stock
     );
     res.status(201).send(response);
