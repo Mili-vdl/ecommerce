@@ -1,12 +1,17 @@
-const { users } = require("../db/dataBase");
+const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
 const createUserController = async (name, username, email, password, role) => {
-  const id = users.length + 1;
   const hashPassword = await bcrypt.hash(password, 10);
   console.log(hashPassword);
-  const newUser = { id, name, username, email, password: hashPassword, role };
-  users.push(newUser);
+  const newUser = new User({
+    name,
+    username,
+    email,
+    password: hashPassword,
+    role,
+  });
+  unewUser.save();
   return newUser;
 };
 
