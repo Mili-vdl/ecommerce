@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const upload = require("../db/storage");
 const {
   getAllProductsHandler,
   getOneProductHandler,
@@ -10,7 +11,7 @@ const productsRouter = Router();
 
 productsRouter.get("/", getAllProductsHandler);
 productsRouter.get("/:id", getOneProductHandler);
-productsRouter.post("/", createProductHandler);
+productsRouter.post("/", upload.single("imagen"), createProductHandler);
 productsRouter.put("/:id", updateProductHandler);
 productsRouter.delete("/:id", deleteProductHandler);
 

@@ -1,31 +1,32 @@
-//const { products } = require("../db/dataBase");
 const Product = require("../models/Products");
 
 const createProductController = async (
   nombre,
   categoria,
   marca,
-  inalambrico,
   precio,
   stock,
-  fechaIngreso
+  descripcion,
+  filename
+  //fechaIngreso : es automatico
 ) => {
   const newProduct = new Product({
     nombre,
     categoria,
     marca,
-    inalambrico,
     precio,
     stock,
-    fechaIngreso,
+    descripcion,
   });
+  newProduct.setImgUrl(filename);
+  //console.log(newProduct);
   await newProduct.validate();
   newProduct.save();
   return newProduct;
 };
 
-const getAllProductsController = () => {
-  return products;
+const getAllProductsController = async () => {
+  return await Product.find();
 };
 
 const getProductsByNameController = (nombre) => {

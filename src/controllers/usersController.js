@@ -15,24 +15,24 @@ const createUserController = async (name, username, email, password, role) => {
   return newUser;
 };
 
-const getAllUsersController = () => {
+const getAllUsersController = async () => {
+  const users = await User.find();
   if (!users.length) throw new Error("No hay usuarios");
   return users;
 };
 
-const getUserByNameController = (name) => {
-  const usersByName = users.filter((user) => user.name === name);
+const getUserByNameController = async (name) => {
+  const usersByName = await User.find(name);
   if (!usersByName.length) throw new Error("No hay usuarios");
-
   return usersByName;
 };
 
-const getUserByIdController = (id) => {
-  const userById = users.find((user) => user.id === Number(id));
+const getUserByIdController = async (id) => {
+  const userById = await User.findById(id);
   return userById;
 };
 
-const updateUserController = (id, name, username, email) => {
+const updateUserController = async (id, name, username, email) => {
   const newUser = { name, username, email };
   const userById = getUserByIdController(id);
   if (userById) {
@@ -41,7 +41,7 @@ const updateUserController = (id, name, username, email) => {
   return userById;
 };
 
-const deleteUserController = (id) => {
+const deleteUserController = async (id) => {
   const index = users.findIndex((user) => user.id === Number(id));
   let deleteUser = null;
   if (index !== -1) {

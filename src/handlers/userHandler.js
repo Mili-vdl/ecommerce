@@ -18,27 +18,28 @@ const userSchema = Joi.object({
   role: Joi.string().valid("admin", "user").required(),
 });
 
-const getAllUsersHandler = (req, res) => {
+const getAllUsersHandler = async (req, res) => {
   try {
-    const { name } = req.query;
+    const name = req.query;
     if (name) {
-      res.send(getUserByNameController(name));
+      const response = await getUserByNameController(name);
+      res.status(200).send(response);
     } else {
-      const response = getAllUsersController();
-      res.send(response);
+      const response = await getAllUsersController();
+      res.status(200).send(response);
     }
   } catch (error) {
-    res.status(418).send({ Error: error.message });
+    res.status(400).send({ Error: error.message });
   }
 };
 
-const getOneUserHandler = (req, res) => {
+const getOneUserHandler = async (req, res) => {
   try {
     const { id } = req.params;
-    const response = getUserByIdController(id);
+    const response = await getUserByIdController(id);
     res.send(response);
   } catch (error) {
-    res.status(418).send({ Error: error.message });
+    res.status(400).send({ Error: error.message });
   }
 };
 
