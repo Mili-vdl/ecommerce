@@ -28,12 +28,17 @@ const createProductHandler = async (req, res) => {
     //const { error } = productSchema.validate(req.body);
     //if (error) res.status(418).send(error.details[0].message);
     const { nombre, categoria, marca, precio, stock, descripcion } = req.body;
-    if (!req.file) {
+    if (!req.files) {
       return res.status(400).send({ Error: "No se ha subido ningún archivo." });
     }
-    //console.log(req.body);
-    const { filename } = req.file;
-    //console.log(filename);
+    const files = req.files;
+    let imagenesUrls = [];
+    if (files) {
+      imagenesUrls = files.map((file) => {
+        const filename = file.filename; // Obtenemos el filename de cada archivo
+        return `${process.env.APP_HOST}:${process.env.PORT}/public/${filename}`;
+      });
+    }
 
     const response = await createProductController(
       nombre,
@@ -42,7 +47,7 @@ const createProductHandler = async (req, res) => {
       precio,
       stock,
       descripcion,
-      filename
+      imagenesUrls
     );
     res.status(201).send(response);
   } catch (error) {

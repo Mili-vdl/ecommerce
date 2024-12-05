@@ -7,9 +7,10 @@ const createProductController = async (
   precio,
   stock,
   descripcion,
-  filename
+  imagenesUrls
   //fechaIngreso : es automatico
 ) => {
+  console.log(imagenesUrls);
   const newProduct = new Product({
     nombre,
     categoria,
@@ -17,8 +18,9 @@ const createProductController = async (
     precio,
     stock,
     descripcion,
+    imagen: imagenesUrls,
   });
-  newProduct.setImgUrl(filename);
+  //newProduct.setImgUrl(filename);
   //console.log(newProduct);
   await newProduct.validate();
   newProduct.save();

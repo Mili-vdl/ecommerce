@@ -11,7 +11,8 @@ const productsRouter = Router();
 
 productsRouter.get("/", getAllProductsHandler);
 productsRouter.get("/:id", getOneProductHandler);
-productsRouter.post("/", upload.single("imagen"), createProductHandler);
+//productsRouter.post("/", upload.single("imagen"), createProductHandler);
+productsRouter.post("/", upload.array("imagen", 5), createProductHandler);
 productsRouter.put("/:id", updateProductHandler);
 productsRouter.delete("/:id", deleteProductHandler);
 
