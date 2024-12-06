@@ -7,12 +7,12 @@ const {
   //getProductsByMarcaController,
 } = require("../controllers/productsController");
 
-const getAllProductsHandler = (req, res) => {
+const getAllProductsHandler = async (req, res) => {
   const { nombre } = req.query;
   if (nombre) {
     res.send(getProductsByNameController(nombre));
   } else {
-    const response = getAllProductsController();
+    const response = await getAllProductsController();
     res.send(response);
   }
 };
@@ -27,14 +27,27 @@ const createProductHandler = async (req, res) => {
   try {
     //const { error } = productSchema.validate(req.body);
     //if (error) res.status(418).send(error.details[0].message);
-    const { nombre, categoria, marca, inalambrico, precio, stock } = req.body;
+    const { nombre, categoria, marca, precio, stock, descripcion } = req.body;
+    if (!req.files) {
+      return res.status(400).send({ Error: "No se ha subido ningún archivo." });
+    }
+    const files = req.files;
+    let imagenesUrls = [];
+    if (files) {
+      imagenesUrls = files.map((file) => {
+        const filename = file.filename; // Obtenemos el filename de cada archivo
+        return `${process.env.APP_HOST}:${process.env.PORT}/public/${filename}`;
+      });
+    }
+
     const response = await createProductController(
       nombre,
       categoria,
       marca,
-      inalambrico,
       precio,
-      stock
+      stock,
+      descripcion,
+      imagenesUrls
     );
     res.status(201).send(response);
   } catch (error) {
